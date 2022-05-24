@@ -4,15 +4,26 @@ using UnityEngine;
 
 public class ChildCollider : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public bool canMove;
+    private void Start()
     {
-        
+        canMove = true;
     }
-
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        
+        if (collision.tag == "pushableObject")
+        {
+            collision.transform.Translate(Vector3.up, Space.World);
+            canMove = false;
+        }
+        else if (collision.tag == "Collider")
+        {
+           
+            canMove = false;
+        }
+        else
+        {
+            canMove = true;
+        }
     }
 }

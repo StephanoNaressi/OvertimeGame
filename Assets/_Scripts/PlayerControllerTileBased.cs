@@ -11,6 +11,8 @@ public class PlayerControllerTileBased : MonoBehaviour
     Vector3 playerOldPos;
     [SerializeField]
     GameObject ColCheck;
+    public bool canMove;
+    Vector3 lookingDir;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,41 +22,66 @@ public class PlayerControllerTileBased : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        canMove = GetComponentInChildren<ChildCollider>().canMove;
+        if (canMove)
         {
-            moveTile(Vector3.up);
-            ColCheck.transform.position = gameObject.transform.position +  Vector3.up;
-            spr.sprite = sprImg[3];
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                lookingDir = Vector3.up;
+                moveTile(Vector3.up);
+                //ColCheck.transform.position = gameObject.transform.position + Vector3.up;
+                spr.sprite = sprImg[3];
+            }
+            else if (Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                lookingDir = Vector3.down;
+                moveTile(Vector3.down);
+                //ColCheck.transform.position = gameObject.transform.position + Vector3.down;
+                spr.sprite = sprImg[2];
+            }
+            else if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                lookingDir = Vector3.left;
+                spr.sprite = sprImg[0];
+                //ColCheck.transform.position = gameObject.transform.position + Vector3.left;
+                moveTile(Vector3.left);
+            }
+            else if (Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                lookingDir = Vector3.right;
+                spr.sprite = sprImg[1];
+               // ColCheck.transform.position = gameObject.transform.position + Vector3.right;
+                moveTile(Vector3.right);
+            }
         }
-        else if(Input.GetKeyDown(KeyCode.DownArrow))
+        else
         {
-            moveTile(Vector3.down);
-            ColCheck.transform.position = gameObject.transform.position +  Vector3.down;
-            spr.sprite = sprImg[2];
-        }
-        else if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            spr.sprite = sprImg[0];
-            ColCheck.transform.position = gameObject.transform.position + Vector3.left;
-            moveTile(Vector3.left);
-        }
-        else if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            spr.sprite = sprImg[1];
-            ColCheck.transform.position = gameObject.transform.position + Vector3.right;
-            moveTile(Vector3.right);
+            switch (lookingDir)
+            {
+                //looking up
+                case Vector3 v when v.Equals(Vector3.up):
+                    moveTile(Vector3.down);
+                    GetComponentInChildren<ChildCollider>().canMove = true;
+                    break;
+                //looking down
+                case Vector3 v when v.Equals(Vector3.down):
+                    moveTile(Vector3.up);
+                    GetComponentInChildren<ChildCollider>().canMove = true;
+                    break;
+                //looking left
+                case Vector3 v when v.Equals(Vector3.left):
+                    moveTile(Vector3.right);
+                    GetComponentInChildren<ChildCollider>().canMove = true;
+                    break;
+                //looking right
+                case Vector3 v when v.Equals(Vector3.right):
+                    moveTile(Vector3.left);
+                    GetComponentInChildren<ChildCollider>().canMove = true;
+                    break;
+            }
         }
 
-    }
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
 
-        if(collision.tag == "Collider")
-        {
-            
-            gameObject.transform.position = playerOldPos;
-         
-        }
     }
     private void moveTile(Vector3 v)
     {
