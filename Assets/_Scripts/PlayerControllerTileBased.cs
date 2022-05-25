@@ -43,7 +43,6 @@ public class PlayerControllerTileBased : MonoBehaviour
     void raycastCheck(Vector3 v)
     {
         RaycastHit2D hit = Physics2D.Raycast(gameObject.transform.position+v, transform.TransformDirection(v), 0.2f);
-        //Debug.DrawRay(gameObject.transform.position+v, transform.TransformDirection(-v)*1f, Color.red,1f);
         if(hit.collider != null)
         {
             if (hit.collider.tag == "Collider")
@@ -52,28 +51,10 @@ public class PlayerControllerTileBased : MonoBehaviour
             }
             else if (hit.collider.tag == "pushableObject")
             {
-                switch (lookingDir)
+                if(hit.collider.GetComponent<MovableScript>() != null)
                 {
-                    //looking up
-                    case Vector3 z when z.Equals(Vector3.up):
-                        print("ASD");
-                        hit.collider.transform.Translate(Vector3.up, Space.World);
-                        break;
-                    //looking down
-                    case Vector3 z when z.Equals(Vector3.down):
-                        hit.collider.transform.Translate(Vector3.down, Space.World);
-                        break;
-                    //looking left
-                    case Vector3 z when z.Equals(Vector3.left):
-                        hit.collider.transform.Translate(Vector3.left, Space.World);
-                        break;
-                    //looking right
-                    case Vector3 z when z.Equals(Vector3.right):
-                        hit.collider.transform.Translate(Vector3.right, Space.World);
-                        break;
-                
-                }
-                
+                    hit.collider.GetComponent<MovableScript>().MoveTile(v);
+                } 
             }
         }
         else
@@ -84,7 +65,6 @@ public class PlayerControllerTileBased : MonoBehaviour
     }
     private void moveTile(Vector3 v)
     {
-        //playerOldPos = gameObject.transform.position;
         gameObject.transform.Translate(v, Space.World);
     }
 }
