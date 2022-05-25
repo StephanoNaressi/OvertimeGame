@@ -6,7 +6,7 @@ public class DialogueScript : MonoBehaviour
 {
     [SerializeField]
     TextMeshProUGUI textComponent;
-    public string[] lines;
+    public List<string> dialogueLines = new List<string>();
     public float textSpeed;
 
     int index;
@@ -22,25 +22,29 @@ public class DialogueScript : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            if(textComponent.text == lines[index])
+            if(textComponent.text == dialogueLines[index])
             {
                 NextLine();
             }
             else
             {
                 StopAllCoroutines();
-                textComponent.text = lines[index];
+                textComponent.text = dialogueLines[index];
             }
         }
     }
-    void startDialogue()
+    public void insertNewLine(string s)
+    {
+        dialogueLines.Add(s);
+    }
+    public void startDialogue()
     {
         index = 0;
         StartCoroutine(TypeLine());
     }
     IEnumerator TypeLine()
     {
-        foreach (char c in lines[index].ToCharArray())
+        foreach (char c in dialogueLines[index].ToCharArray())
         {
             textComponent.text += c;
             yield return new WaitForSeconds(textSpeed);
@@ -48,7 +52,7 @@ public class DialogueScript : MonoBehaviour
     }
     void NextLine()
     {
-        if(index < lines.Length - 1)
+        if(index < dialogueLines.Count - 1)
         {
             index++;
             textComponent.text = string.Empty;
@@ -56,6 +60,7 @@ public class DialogueScript : MonoBehaviour
         }
         else
         {
+            textComponent.text = string.Empty;
             gameObject.SetActive(false);
         }
     }

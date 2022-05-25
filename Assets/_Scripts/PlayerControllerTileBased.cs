@@ -12,10 +12,11 @@ public class PlayerControllerTileBased : MonoBehaviour
     [SerializeField]
     float rayDist;
     public Vector3 lookingDir;
+    KeyCode keyBeingPressed;
     // Update is called once per frame
     void Update()
     {
-            if (Input.GetKeyDown(KeyCode.UpArrow))
+        if (Input.GetKeyDown(KeyCode.UpArrow))
             {
                 lookingDir = Vector3.up;
                 raycastCheck(Vector3.up);
