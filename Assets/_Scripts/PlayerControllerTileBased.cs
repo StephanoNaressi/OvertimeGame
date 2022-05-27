@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class PlayerControllerTileBased : MonoBehaviour
 {
     [SerializeField]
@@ -14,9 +14,14 @@ public class PlayerControllerTileBased : MonoBehaviour
     public Vector3 lookingDir;
     KeyCode keyBeingPressed;
     // Update is called once per frame
+    public bool canPlay = true;
+    public ParticleSystem part;
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if (canPlay)
+        {
+            
+            if (Input.GetKeyDown(KeyCode.UpArrow))
             {
                 lookingDir = Vector3.up;
                 raycastCheck(Vector3.up);
@@ -40,6 +45,12 @@ public class PlayerControllerTileBased : MonoBehaviour
                 raycastCheck(Vector3.right);
                 spr.sprite = sprImg[1];
             }
+            else if (Input.GetKeyDown(KeyCode.R))
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
+            }
+        }
+       
     }
     void raycastCheck(Vector3 v)
     {
@@ -54,7 +65,7 @@ public class PlayerControllerTileBased : MonoBehaviour
             {
                 if(hit.collider.GetComponent<MovableScript>() != null)
                 {
-                    hit.collider.GetComponent<MovableScript>().MoveTile(v);
+                    hit.collider.GetComponent<MovableScript>().MoveTile(v*2);
                 } 
             }
         }
@@ -66,6 +77,7 @@ public class PlayerControllerTileBased : MonoBehaviour
     }
     private void moveTile(Vector3 v)
     {
+        part.Play();
         gameObject.transform.Translate(v, Space.World);
     }
 }
