@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
+using TMPro;
 public class LevelManager : MonoBehaviour
 {
     public DialogueChoiceObject DialogueAssets;
@@ -9,7 +10,15 @@ public class LevelManager : MonoBehaviour
     LevelState previousState;
     public DialogueScript dia;
     public PlayerControllerTileBased playerC;
+    public GameObject minnieImg;
+    public Sprite[] minniSprites;
 
+    public GameObject timerText;
+    bool timeIsRunning = false;
+    public float timeRemaining = 15f;
+
+    public GameObject scoreText;
+    TextMeshProUGUI scoreHolder;
     public enum LevelState
     {
         baseState,
@@ -28,18 +37,8 @@ public class LevelManager : MonoBehaviour
     }
     private void Start()
     {
-        for (int i = 0; i < 2; i++)
-        {
-            if (i == 0)
-            {
-                //
-            }
-           else if (i == 1)
-            {
-                //
-            }  
-        }
         StartCoroutine(startSequence());
+        scoreHolder = scoreText.GetComponent<TextMeshProUGUI>();
     }
     IEnumerator startSequence()
     {
@@ -62,42 +61,49 @@ public class LevelManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        scoreHolder.text = Mathf.RoundToInt(ScoreManager.Instance.score).ToString();
+        StartTimer();
         if(DialogueState != previousState)
         {
             switch (DialogueState)
             {
                 case LevelState.baseState:
-                    
+                    minnieImg.GetComponent<Image>().sprite = minniSprites[3];
+                    timeIsRunning = true;
                     break;
                 case LevelState.Introduction:
-                
+                    minnieImg.GetComponent<Image>().sprite = minniSprites[1];
                     playerC.canPlay = false;
                     SendDialogue(DialogueAssets.Introduction+" "+DialogueAssets.Question);
                     break;
                 case LevelState.WrongChoice1:
-                    
+                    minnieImg.GetComponent<Image>().sprite = minniSprites[0];
                     playerC.canPlay = false;
                     SendDialogue(DialogueAssets.WrongChoice1);
                     break;
                 case LevelState.WrongChoice2:
-                   
+                    minnieImg.GetComponent<Image>().sprite = minniSprites[2];
                     playerC.canPlay = false;
                     SendDialogue(DialogueAssets.WrongChoice2);
                     break;
                 case LevelState.WrongChoice3:
-               
+                    minnieImg.GetComponent<Image>().sprite = minniSprites[2];
                     playerC.canPlay = false;
                     SendDialogue(DialogueAssets.WrongChoice3);
                     break;
                 case LevelState.Conclusion:
+                    minnieImg.GetComponent<Image>().sprite = minniSprites[1];
                     SendDialogue(DialogueAssets.Conclusion);
                     break;
                 case LevelState.CorrectChoice:
-               
+                    minnieImg.GetComponent<Image>().sprite = minniSprites[1];
                     playerC.canPlay = false;
+                    timeIsRunning = false;
+                    ScoreManager.Instance.score += timeRemaining;
                     SendDialogue(DialogueAssets.CorrectChoice);
                     break;
                 case LevelState.Question:
+                    minnieImg.GetComponent<Image>().sprite = minniSprites[4];
                     SendDialogue(DialogueAssets.Question);
                     break;
 
@@ -105,6 +111,36 @@ public class LevelManager : MonoBehaviour
             previousState = DialogueState;
         }
         
+    }
+    void StartTimer()
+    {
+        if (timeIsRunning)
+        {
+            timerText.SetActive(true);
+            if (timeRemaining > 0)
+            {
+                timeRemaining -= Time.deltaTime;
+                DisplayTimer(timeRemaining);
+            }
+            else
+            {
+                Debug.Log("Time has run out!");
+                timeRemaining = 0;
+                timeIsRunning = false;
+                //Move onto the next level?
+            }
+        }
+        else
+        {
+            timerText.SetActive(false);
+        }
+    }
+    void DisplayTimer(float timeToDisplay)
+    {
+        timeToDisplay += 1;
+        float minutes = Mathf.FloorToInt(timeToDisplay / 60);
+        float seconds = Mathf.FloorToInt(timeToDisplay % 60);
+        timerText.GetComponent<TextMeshProUGUI>().text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
     void SendDialogue(string s)
     {

@@ -228,6 +228,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1051b9298dadf73448f1aaea768174f9, type: 3}
+--- !u!1 &368316128 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3053903737611790081, guid: a45015e0cf64cbf428ccd7695e6cdfbc, type: 3}
+  m_PrefabInstance: {fileID: 3053903737640572668}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &419479254 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8661690786533026933, guid: dfc5308cf1514c340b5fae78010a6944, type: 3}
@@ -243,6 +248,7 @@ GameObject:
   m_Component:
   - component: {fileID: 741329365}
   - component: {fileID: 741329364}
+  - component: {fileID: 741329366}
   m_Layer: 0
   m_Name: LevelManager
   m_TagString: Untagged
@@ -266,6 +272,16 @@ MonoBehaviour:
   DialogueState: 5
   dia: {fileID: 959459724}
   playerC: {fileID: 1270091210}
+  minnieImg: {fileID: 368316128}
+  minniSprites:
+  - {fileID: 21300000, guid: 3dd4f24ca999f744686efa9124adbcba, type: 3}
+  - {fileID: 21300000, guid: 7017832ee0b1c294a8b01d70263b8fa3, type: 3}
+  - {fileID: 21300000, guid: 3c5110d5024b5884582915adb0c01197, type: 3}
+  - {fileID: 21300000, guid: 37361ee7218e26c4192b2e8faa07db78, type: 3}
+  - {fileID: 21300000, guid: 606636698be3bd8469b5fb878595273d, type: 3}
+  timerText: {fileID: 1111518380}
+  timeRemaining: 15
+  scoreText: {fileID: 884535285}
 --- !u!4 &741329365
 Transform:
   m_ObjectHideFlags: 0
@@ -281,10 +297,28 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &741329366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 741329363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fb6f501f4dd9664a98004ea54dbc9f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  score: 0
 --- !u!60 &868351448 stripped
 PolygonCollider2D:
   m_CorrespondingSourceObject: {fileID: 8085806025322478157, guid: f82eea400e0643441b4127d0ed090460, type: 3}
   m_PrefabInstance: {fileID: 8085806025586689941}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &884535285 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6808817291532236062, guid: a45015e0cf64cbf428ccd7695e6cdfbc, type: 3}
+  m_PrefabInstance: {fileID: 3053903737640572668}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &959459724 stripped
 MonoBehaviour:
@@ -297,6 +331,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e10fb806b3af8e34183d8e59e083b086, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1111518380 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6290534388561333509, guid: a45015e0cf64cbf428ccd7695e6cdfbc, type: 3}
+  m_PrefabInstance: {fileID: 3053903737640572668}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1144958549 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4524902158960206891, guid: a45015e0cf64cbf428ccd7695e6cdfbc, type: 3}
@@ -387,6 +426,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 517932191359908192, guid: d1e8ff8b815b0a5419c13468345e0858, type: 3}
+      propertyPath: orthographic size
+      value: 4.32
+      objectReference: {fileID: 0}
     - target: {fileID: 517932191359908195, guid: d1e8ff8b815b0a5419c13468345e0858, type: 3}
       propertyPath: m_Name
       value: Main Camera
@@ -912,6 +955,10 @@ PrefabInstance:
       propertyPath: m_Follow
       value: 
       objectReference: {fileID: 419479254}
+    - target: {fileID: 8204363755211478246, guid: 3cee019f68f43784699125322d506e76, type: 3}
+      propertyPath: m_Lens.OrthographicSize
+      value: 4.32
+      objectReference: {fileID: 0}
     - target: {fileID: 8204363755211478247, guid: 3cee019f68f43784699125322d506e76, type: 3}
       propertyPath: m_RootOrder
       value: 5
