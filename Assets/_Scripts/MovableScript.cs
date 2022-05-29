@@ -11,6 +11,7 @@ public class MovableScript : MonoBehaviour
     [SerializeField]
     Sprite[] sprites;
     public bool isMovable;
+    
     private void Start()
     {
         setSprite();
@@ -22,7 +23,7 @@ public class MovableScript : MonoBehaviour
    
         if(collision.tag == "Interactable")
         {
-            print("Im where im supposed to be");
+            
             //Here you would send the value of the object that is being inserted to the correct method for the level management
             //Send dialogue
             if (push.isCorrect)
@@ -31,8 +32,19 @@ public class MovableScript : MonoBehaviour
             }
             else
             {
-                
-                lvl.DialogueState = LevelManager.LevelState.WrongChoice1;
+                int f = Random.Range(1, 3);
+                switch (f)
+                {
+                    case 1:
+                        lvl.DialogueState = LevelManager.LevelState.WrongChoice1;
+                        break;
+                    case 2:
+                        lvl.DialogueState = LevelManager.LevelState.WrongChoice2;
+                        break;
+                    case 3:
+                        lvl.DialogueState = LevelManager.LevelState.WrongChoice3;
+                        break;
+                }
             }
         }
     }
@@ -47,6 +59,7 @@ public class MovableScript : MonoBehaviour
         {
             if (isMovable)
             {
+                
                 gameObject.transform.Translate(v, Space.World);
             }
             

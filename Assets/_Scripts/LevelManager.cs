@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 public class LevelManager : MonoBehaviour
 {
     public DialogueChoiceObject DialogueAssets;
@@ -19,6 +20,8 @@ public class LevelManager : MonoBehaviour
 
     public GameObject scoreText;
     TextMeshProUGUI scoreHolder;
+
+    public ScriptableScore s;
     public enum LevelState
     {
         baseState,
@@ -58,10 +61,30 @@ public class LevelManager : MonoBehaviour
         DialogueState = LevelState.baseState;
         yield return new WaitForSeconds(1f);
     }
+    IEnumerator GoNextScene()
+    {
+        yield return new WaitForSeconds(4f);
+       
+        if(SceneManager.GetActiveScene().buildIndex == 6)
+        {
+            SceneManager.LoadScene(1, LoadSceneMode.Single);
+        }
+        else
+        {
+            
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1, LoadSceneMode.Single);
+            Destroy(gameObject);
+        }
+        
+    }
+    private void FixedUpdate()
+    {
+        scoreHolder.text = Mathf.RoundToInt(s.SScore).ToString();
+    }
     // Update is called once per frame
     void Update()
     {
-        scoreHolder.text = Mathf.RoundToInt(ScoreManager.Instance.score).ToString();
+        
         StartTimer();
         if(DialogueState != previousState)
         {
@@ -96,11 +119,13 @@ public class LevelManager : MonoBehaviour
                     SendDialogue(DialogueAssets.Conclusion);
                     break;
                 case LevelState.CorrectChoice:
+                    s.SScore += timeRemaining;
                     minnieImg.GetComponent<Image>().sprite = minniSprites[1];
                     playerC.canPlay = false;
                     timeIsRunning = false;
-                    ScoreManager.Instance.score += timeRemaining;
+                    
                     SendDialogue(DialogueAssets.CorrectChoice);
+                    StartCoroutine(GoNextScene());
                     break;
                 case LevelState.Question:
                     minnieImg.GetComponent<Image>().sprite = minniSprites[4];
@@ -116,6 +141,7 @@ public class LevelManager : MonoBehaviour
     {
         if (timeIsRunning)
         {
+            if(timerText!= null)
             timerText.SetActive(true);
             if (timeRemaining > 0)
             {
@@ -128,11 +154,16 @@ public class LevelManager : MonoBehaviour
                 timeRemaining = 0;
                 timeIsRunning = false;
                 //Move onto the next level?
+                StartCoroutine(GoNextScene());
             }
         }
         else
         {
-            timerText.SetActive(false);
+            if(timerText != null)
+            {
+                timerText.SetActive(false);
+            }
+            
         }
     }
     void DisplayTimer(float timeToDisplay)
@@ -140,7 +171,10 @@ public class LevelManager : MonoBehaviour
         timeToDisplay += 1;
         float minutes = Mathf.FloorToInt(timeToDisplay / 60);
         float seconds = Mathf.FloorToInt(timeToDisplay % 60);
-        timerText.GetComponent<TextMeshProUGUI>().text = string.Format("{0:00}:{1:00}", minutes, seconds);
+        if (timerText != null) {
+            timerText.GetComponent<TextMeshProUGUI>().text = string.Format("{0:00}:{1:00}", minutes, seconds);
+        }
+        
     }
     void SendDialogue(string s)
     {

@@ -8,7 +8,16 @@ public class ScoreManager : MonoBehaviour
     public float score;
     private void Awake()
     {
-        Instance = this;
+        if(Instance != null)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            Instance = this;
+            
+        }
+        
     }
 
 }

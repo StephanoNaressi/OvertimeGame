@@ -16,6 +16,7 @@ public class PlayerControllerTileBased : MonoBehaviour
     // Update is called once per frame
     public bool canPlay = true;
     public ParticleSystem part;
+    public AudioSource aSource;
     void Update()
     {
         if (canPlay)
@@ -65,7 +66,8 @@ public class PlayerControllerTileBased : MonoBehaviour
             {
                 if(hit.collider.GetComponent<MovableScript>() != null)
                 {
-                    hit.collider.GetComponent<MovableScript>().MoveTile(v*2);
+                    aSource.PlayOneShot(aSource.clip);
+                    hit.collider.GetComponent<MovableScript>().MoveTile(v);
                 } 
             }
         }

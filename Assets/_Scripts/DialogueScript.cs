@@ -12,6 +12,7 @@ public class DialogueScript : MonoBehaviour
     public float textSpeed;
     public GameObject pressZ;
     public int index;
+    public AudioSource aSource;
     // Start is called before the first frame update
     void Awake()
     {
@@ -63,8 +64,9 @@ public class DialogueScript : MonoBehaviour
             foreach (char c in dialogueLines[index].ToCharArray())
             {
                 textComponent.text += c;
+                aSource.PlayOneShot(aSource.clip);
                 yield return new WaitForSeconds(textSpeed);
-                print("I RUN");
+               
             }
         }
 

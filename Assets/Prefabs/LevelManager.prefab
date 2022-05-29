@@ -1,0 +1,74 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2393455577317415418
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2393455577317415420}
+  - component: {fileID: 2393455577317415421}
+  - component: {fileID: 2393455577317415423}
+  m_Layer: 0
+  m_Name: LevelManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2393455577317415420
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2393455577317415418}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 179.24194, y: 147.8973, z: 1.8679907}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2393455577317415421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2393455577317415418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f8ca62ce49c79d43a95d9a0e99eaba9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DialogueAssets: {fileID: 11400000, guid: 1644d159f111d69499341fcae9be11a9, type: 2}
+  DialogueState: 5
+  dia: {fileID: 0}
+  playerC: {fileID: 0}
+  minnieImg: {fileID: 0}
+  minniSprites:
+  - {fileID: 21300000, guid: 3dd4f24ca999f744686efa9124adbcba, type: 3}
+  - {fileID: 21300000, guid: 7017832ee0b1c294a8b01d70263b8fa3, type: 3}
+  - {fileID: 21300000, guid: 3c5110d5024b5884582915adb0c01197, type: 3}
+  - {fileID: 21300000, guid: 37361ee7218e26c4192b2e8faa07db78, type: 3}
+  - {fileID: 21300000, guid: 606636698be3bd8469b5fb878595273d, type: 3}
+  timerText: {fileID: 0}
+  timeRemaining: 15
+  scoreText: {fileID: 0}
+--- !u!114 &2393455577317415423
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2393455577317415418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fb6f501f4dd9664a98004ea54dbc9f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  score: 0
